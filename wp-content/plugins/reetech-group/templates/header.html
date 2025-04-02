@@ -12,44 +12,39 @@
     <meta name="viewport" content="width=900" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     
-    
-    <script>
-        function loadScripts(baseUrl, files) {
-          files.forEach(file => {
-            let script = document.createElement("script");
-            script.src = baseUrl + file;
-            script.type = "application/javascript";
-            document.head.appendChild(script);
-          });
-        }
-      
-        // Example Usage:
-        var baseUrl = "https://www.skynova.com/javascript/";
-        baseUrl="http://localhost/wordpress1/wp-content/plugins/reetech-group/javascript/";
-        var scriptFiles = ["error_report.js"]; // Add your script filenames here
-      
-        loadScripts(baseUrl, scriptFiles);
-      </script>
-
+    <link rel="shortcut icon" href="https://www.skynova.com/images/favicon.ico?v=1" />
 <script>
-    function loadAssets(baseUrl, scripts = [], styles = []) {
-      // Load JavaScript files
-      scripts.forEach(file => {
-        let script = document.createElement("script");
-        script.src = baseUrl + file;
-        script.type = "application/javascript";
-        document.head.appendChild(script);
-      });
-  
-      // Load CSS files
-      styles.forEach(file => {
-        let link = document.createElement("link");
-        link.href = baseUrl + file;
-        link.rel = "stylesheet";
-        document.head.appendChild(link);
-      });
-    }
-  
+   function loadAssets(baseUrl, scripts = [], styles = [], images = []) {
+  // Load JavaScript files
+  scripts.forEach(file => {
+    let script = document.createElement("script");
+    script.src = baseUrl + file;
+    script.type = "application/javascript";
+    document.head.appendChild(script);
+  });
+
+  // Load CSS files
+  styles.forEach(file => {
+    let link = document.createElement("link");
+    link.href = baseUrl + file;
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+  });
+
+  // Preload images (doesn't add to DOM, just loads them into cache)
+  images.forEach(file => {
+    let img = new Image();
+    img.src = baseUrl + file;
+  });
+}
+
+// Example usage:
+// loadAssets(
+//   'https://example.com/assets/',
+//   ['script1.js', 'script2.js'],
+//   ['style1.css', 'style2.css'],
+//   ['image1.jpg', 'image2.png']
+// );
     // Example Usage:
     var baseUrl = "https://www.skynova.com/javascript/";
     baseUrl="http://localhost/wordpress1/wp-content/plugins/reetech-group/"
@@ -58,18 +53,25 @@
   
     loadAssets(baseUrl, scriptFiles, styleFiles);
   </script>
-  
-      
-    
+
+<script>
+    function setTheme(theme) {
+        localStorage.setItem('selectedTheme', theme);
+        document.getElementById('themeStylesheet').href = `https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-${theme}.min.css`;
+    }
+
+    function applyStoredTheme() {
+        const storedTheme = localStorage.getItem('selectedTheme') || 'light';
+        document.getElementById('themeStylesheet').href = `https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-${storedTheme}.min.css`;
+    }
+
+    document.addEventListener("DOMContentLoaded", applyStoredTheme);
+</script>
+
+<link id="themeStylesheet" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-light.min.css">
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-   \
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  
-    
-
     <style>
         .table-list th:last-child {
             padding-left: 15px;
@@ -92,8 +94,9 @@
 
 
 
+    
 
-
+    
     <style>
         #tablePaginatorFirstPage,
         #tablePaginatorPreviousPage,
@@ -260,6 +263,7 @@
 
             </ul>
 
+            
 
         </div>
 

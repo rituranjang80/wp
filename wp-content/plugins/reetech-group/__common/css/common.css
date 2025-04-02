@@ -155,13 +155,13 @@ a:hover {
 
 #top-menu .container {
   position: relative;
-  display: flex;
+  display: flex; 
   align-items: center;
 }
 
 .menu {
   white-space: nowrap;
-  display: flex;
+   display: flex;
   line-height: var(--line-height);
   font-size: var(--font-size);
 }
