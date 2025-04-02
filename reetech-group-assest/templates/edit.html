@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Edit Invoice</title>
+    <meta name="viewport" content="width=900" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+    <link rel="shortcut icon" href="https://www.skynova.com/favicon.ico?v=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://www.skynova.com/app/__common/css/common.css?v=V0002458"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../reetech-group-assest/css/edit.css"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../reetech-group-assest/javascript/edit.js"></script>
+
+    <!-- Include Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <div class="page-body">
+      <div class="container">
+        <div class="page-header">
+          <h1>Edit Invoice (0000001:Past due)</h1>
+          <button type="button" id="btnToggleOptions">
+            Show Customization Options
+          </button>
+        </div>
+
+        <div class="feedback-messages">
+          <div class="alert alert-danger" id="pageError">
+            <button
+              type="button"
+              class="btn btn-dark close"
+              aria-hidden="true"
+            ></button>
+            <span class="msg"></span>
+          </div>
+
+          <div class="alert alert-success" id="pageSuccess">
+            <button
+              type="button"
+              class="btn btn-dark close"
+              aria-hidden="true"
+            ></button>
+            <span class="msg"></span>
+          </div>
+
+          <div class="alert alert-warning" id="pageWarning">
+            <button
+              type="button"
+              class="btn btn-dark close"
+              aria-hidden="true"
+            ></button>
+            <span class="msg"></span>
+          </div>
+
+          <div class="alert alert-info" id="pageInfo">
+            <button
+              type="button"
+              class="btn btn-dark close"
+              aria-hidden="true"
+            ></button>
+            <span class="msg"></span>
+          </div>
+
+          <div class="alert alert-info" id="pageUpgrade">
+            <button
+              type="button"
+              class="btn btn-dark close"
+              aria-hidden="true"
+            ></button>
+            <span class="msg"></span>
+          </div>
+        </div>
+
+        <form
+          id="invoice_form"
+          name="invoice_form"
+          action=""
+          method="post"
+          enctype="multipart/form-data"
+          autocomplete="off"
+        >
+          <div id="options" class="hidden-print">
+            <div class="options-container">
+              <label class="option label-checkbox">
+                <input
+                  type="checkbox"
+                  onclick="toggleLogo()"
+                  name="customization_logo"
+                  id="customization_logo"
+                />
+                <span>Logo</span>
+              </label>
+
+              <label class="option label-checkbox">
+                <input
+                  type="checkbox"
+                  name="customization_poNumber"
+                  id="customization_poNumber"
+                />
+                <span>P.O. #</span>
+              </label>
+              <label class="option label-checkbox">
+                <input
+                  type="checkbox"
+                  name="customization_tax"
+                  id="customization_tax"
+                />
+                <span>Sales Tax</span>
+              </label>
+
+              <label
+                class="option label-checkbox taxItem"
+                style="display: none"
+              >
+                <input
+                  type="checkbox"
+                  name="customization_tax2"
+                  id="customization_tax2"
+                />
+                <span>Show Tax Column</span>
+
+                <span class="has-tooltip">
+                  <i class="material-icons help" style="opacity: 0.4"
+                    >&#xe887;</i
+                  >
+                  <i class="tip"
+                    >Affects only the finished invoice,<br />not the template
+                    below.</i
+                  >
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <table class="nav-content">
+            <tr>
+              <td class="minify">
+                <a
+                  class="btn btn-dark saveFirst"
+                  href="https://www.skynova.com/app/invoices/view?c=71898917"
+                  sel="btnView"
+                  >View</a
+                >
+              </td>
+              <td class="minify">
+                <a class="btn btn-dark btnPrint" href="" sel="btnPrint"
+                  >Print</a
+                >
+                <!-- <button type="button" class="btn btn-dark btnPrint " sel="btnPrint">Print</button> -->
+              </td>
+              <td class="minify">
+                <a
+                  class="btn btn-dark saveFirst"
+                  href="https://www.skynova.com/app/invoices/pdf?c=71898917"
+                  sel="btnPDF"
+                  >PDF</a
+                >
+              </td>
+              <td class="minify">
+                <a
+                  class="btn btn-dark saveFirst"
+                  href="https://www.skynova.com/app/invoices/send?c=71898917"
+                  sel="btnSend"
+                  >Send</a
+                >
+              </td>
+              <td class="minify">
+                <a
+                  class="btn btn-dark saveFirst"
+                  href="https://www.skynova.com/app/invoices/payment?c=71898917"
+                  sel="btnPaid"
+                  >Mark as Paid</a
+                >
+              </td>
+
+              <td></td>
+
+              <td class="minify">
+                <button
+                  type="button"
+                  onclick="submitInvoiceToWordPress()"
+                  class="btn btn-primary"
+                >
+                  Save Invoice
+                </button>
+
+                <!-- <button type="submit" class="btn btn-dark btnSubmit" onclick="document.getElementById('submitButton').value='Save'" sel="btnSave">Save</button> -->
+              </td>
+            </tr>
+          </table>
+
+          <input type="hidden" name="submitButton" id="submitButton" />
+
+          <input type="hidden" name="c" value="71898917" />
+          <input
+            type="hidden"
+            name="emailaddress_logged_in"
+            value="rituranjan.gupta2@gmail.com"
+          />
+
+          <input type="hidden" name="deleted" id="deleted" value="0" />
+
+          <input type="hidden" name="status" id="status" value="Past due" />
+
+          <div id="modeEdit" class="paper">
+            <div class="meta">
+              <div class="meta-left">
+                <table class="form-invoice">
+                  <tr>
+                    <td>
+                      <h2>From</h2>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        name="from_name"
+                        id="from_name"
+                        onkeyup="sanitizeNames(this);"
+                        value="test"
+                        maxlength="500"
+                        placeholder="Your Name"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <textarea
+                        name="from_address"
+                        id="from_address"
+                        rows="1"
+                        style="min-height: 86px"
+                        class="growTextarea"
+                        maxlength="1000"
+                        placeholder="Your address"
+                      >
+test1</textarea
+                      >
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="padding-top: 20px">
+                      <h2>To</h2>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="dropdown-toggle select">
+                      <select
+                        name="to_id"
+                        id="to_name"
+                        onchange="getCustomerAddress(this.value);"
+                      >
+                        <option value="29632911" selected="selected">
+                          customer1
+                        </option>
+                        <optgroup label="-----------------------------">
+                          <option value="0">New Customer</option>
+                        </optgroup>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr id="rowNewCustomer" style="display: none">
+                    <td>
+                      <input
+                        type="text"
+                        name="to_new_customer"
+                        id="to_new_customer"
+                        onkeyup="sanitizeNames(this);"
+                        value=""
+                        maxlength="200"
+                        placeholder="Customer name"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <textarea
+                        name="to_address"
+                        id="to_address"
+                        rows="1"
+                        style="min-height: 86px"
+                        class="growTextarea"
+                        maxlength="1000"
+                        placeholder="Customer address"
+                      >
+customer Address</textarea
+                      >
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!--end meta-left-->
+
+              <div class="meta-right">
+                <div class="meta-top-right">
+                  <div class="upload-container">
+                    <div id="upload_area" style="display: none"></div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="clearfix">
+                      <div id="btnDeleteLogo" style="display: none">
+                        <button
+                          type="button"
+                          class="btn btn-xs right"
+                          onclick="deleteLogo();"
+                        >
+                          Delete Logo
+                        </button>
+                      </div>
+
+                      <label id="btnUploadLogo" class="input-file" style="">
+                        <b class="btn btn-xs right">Browse...</b>
+                        <input
+                          name="filename"
+                          type="file"
+                          id="logo_file_input"
+                          accept=".jpg, .jpeg, .gif, .bmp, .png"
+                        />
+                      </label>
+                    </div>
+
+                    <input
+                      type="text"
+                      style="display: none"
+                      name="customization_logoFilename"
+                      id="customization_logoFilename"
+                      onchange="updateLogo()"
+                      value=""
+                    />
+                  </div>
+
+                  <input
+                    type="text"
+                    name="invoice_heading"
+                    id="doc_heading"
+                    class="meta-title right"
+                    value="My INVOICE"
+                    maxlength="50"
+                  />
+                </div>
+
+                <div class="clearfix">
+                  <table class="form-invoice dates">
+                    <tr>
+                      <td class="label-header">Invoice #</td>
+                      <td>
+                        <input
+                          type="text"
+                          name="invoice_number"
+                          id="doc_number"
+                          onkeyup="onlyNumbersLettersOrDashes(this)"
+                          value="0000001"
+                          maxlength="55"
+                        />
+                      </td>
+                    </tr>
+
+                    <tr id="po_numberTR" style="display: none">
+                      <td class="label-header">P.O. #</td>
+                      <td>
+                        <input
+                          type="text"
+                          name="po_number"
+                          id="po_number"
+                          onkeyup="onlyNumbersLettersOrDashes(this)"
+                          value=""
+                          maxlength="55"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+
+                  <div class="form-invoice input-daterange dateRange">
+                    <span class="label">Invoice Date</span>
+                    <input
+                      type="text"
+                      name="invoice_date"
+                      id="dateStart"
+                      value="03/17/2025"
+                      maxlength="55"
+                    />
+
+                    <span class="label end">Due Date</span>
+                    <input
+                      type="text"
+                      name="payment_due_date"
+                      id="dateEnd"
+                      value="03/17/2025"
+                      maxlength="55"
+                    />
+                  </div>
+                </div>
+                <!--end clearfix-->
+              </div>
+              <!--end meta-right-->
+            </div>
+            <!--end meta-->
+
+            <table id="dataTable" class="table-record">
+              <tbody>
+                <tr>
+                  <th></th>
+
+                  <th style="width: 86px">Item</th>
+
+                  <th>Description</th>
+
+                  <th style="width: 80px" class="text-right">Unit Price</th>
+
+                  <th style="width: 80px" class="text-right">Quantity</th>
+
+                  <th
+                    style="width: 80px; padding-right: 12px; display: none"
+                    class="text-right taxItem"
+                  >
+                    Tax
+                  </th>
+
+                  <th style="width: 80px" class="text-right">Amount</th>
+                </tr>
+
+                <tr class="line">
+                  <td class="zap has-tooltip tooltip-left">
+                    <!-- ZAP -->
+                    <button
+                      tabindex="-1"
+                      type="button"
+                      class="btnDeleteRow btn-zap"
+                      style=""
+                    >
+                      <i class="material-icons">&#xe5c9;</i>
+                    </button>
+                    <i class="tip">Delete Line</i>
+                  </td>
+
+                  <td class="dropdown-toggle select item">
+                    <select
+                      class="noborder selectItem permEx"
+                      onfocusin="objSelected=this;"
+                      name="item[]"
+                      id="itemSelect0"
+                    >
+                      <option value=""></option>
+                      <option value="Service">Service</option>
+                      <option value="Hours">Hours</option>
+                      <option value="Days">Days</option>
+                      <option value="Product">Product</option>
+                      <option value="Expense" selected="selected">
+                        Expense
+                      </option>
+                      <option value="Discount_aynax">Discount</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <div class="dropdown">
+                      <textarea
+                        name="description[]"
+                        id="description[]"
+                        rows="1"
+                        maxlength="2000"
+                        class="growTextarea lineDescription hasAutocomplete"
+                      >
+Advertising from vendor on 03/17/2025</textarea
+                      >
+                    </div>
+                    <!--end dropdown-->
+                  </td>
+
+                  <td class="price">
+                    <input
+                      type="text"
+                      name="unit_price[]"
+                      id="unit_price[]"
+                      class="text-right linePrice numbersOnly"
+                      value="666.00"
+                      maxlength="20"
+                      placeholder="0.00"
+                    />
+                  </td>
+
+                  <td class="qty">
+                    <input
+                      type="text"
+                      name="qty[]"
+                      id="qty[]"
+                      class="text-right lineQty numbersOnly"
+                      value="1.00"
+                      maxlength="20"
+                      placeholder="0.00"
+                    />
+                  </td>
+
+                  <td class="tax1 taxItem" style="display: none">
+                    <input
+                      type="hidden"
+                      name="tax_total[]"
+                      id="tax_total[]"
+                      class="tax_total"
+                      value="0.00"
+                    />
+
+                    <input
+                      type="hidden"
+                      name="tax[]"
+                      class="tax_rate"
+                      value="0.00000"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax2[]"
+                      class="tax2_rate"
+                      value="0.00000"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax3[]"
+                      class="tax3_rate"
+                      value="0.00000"
+                    />
+
+                    <input
+                      type="hidden"
+                      name="tax_id[]"
+                      class="tax_id"
+                      value="0"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax2_id[]"
+                      class="tax2_id"
+                      value="0"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax3_id[]"
+                      class="tax3_id"
+                      value="0"
+                    />
+
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="openTaxDropdown dropdown-toggle noborder placeholder"
+                        disabled
+                        data-groupid=""
+                      >
+                        <span class="jtaxTotal">0.00% </span>
+                      </button>
+
+                      <div
+                        class="dropdown-menu dropdown-menu-right taxDropdown"
+                        style="max-height: 300px"
+                      >
+                        <label class="dropdown-item">
+                          <input
+                            onclick="changeTaxSelect(this);"
+                            type="checkbox"
+                            class="NoTax"
+                            data-tax="0"
+                            checked
+                          />
+                          <span>No Tax</span>
+                        </label>
+
+                        <hr />
+
+                        <hr />
+                        <button
+                          type="button"
+                          class="dropdown-item NewTax"
+                          onclick="changeTaxSelect(this);"
+                        >
+                          <i class="icon-new">&nbsp;</i> <span>New Tax</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td
+                    class="amount"
+                    onclick="alert('The amount is calculated automatically as soon as you have entered something into both the unit price and the quantity field. \n\n Example: If you wish to enter a service for $100.00, you should enter 100.00 in the unit price field and 1.00 in the quantity field.')"
+                  >
+                    <input
+                      type="text"
+                      tabindex="-1"
+                      name="total[]"
+                      id="total[]"
+                      class="lineTotal"
+                      value="666.00"
+                      readonly
+                    />
+                  </td>
+
+                  <input type="hidden" name="expense_id[]" value="4400093" />
+                </tr>
+
+                <tr class="line">
+                  <td class="zap has-tooltip tooltip-left">
+                    <!-- ZAP -->
+                    <button
+                      tabindex="-1"
+                      type="button"
+                      class="btnDeleteRow btn-zap"
+                      style=""
+                    >
+                      <i class="material-icons">&#xe5c9;</i>
+                    </button>
+                    <i class="tip">Delete Line</i>
+                  </td>
+
+                  <td class="dropdown-toggle select item">
+                    <select
+                      class="noborder selectItem permEx"
+                      onfocusin="objSelected=this;"
+                      name="item[]"
+                      id="itemSelect1"
+                    >
+                      <option value=""></option>
+                      <option value="Service" selected="selected">
+                        Service
+                      </option>
+                      <option value="Hours">Hours</option>
+                      <option value="Days">Days</option>
+                      <option value="Product">Product</option>
+                      <option value="Expense">Expense</option>
+                      <option value="Discount_aynax">Discount</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <div class="dropdown">
+                      <textarea
+                        name="description[]"
+                        id="description[]"
+                        rows="1"
+                        maxlength="2000"
+                        class="growTextarea lineDescription hasAutocomplete"
+                      >
+service</textarea
+                      >
+                    </div>
+                    <!--end dropdown-->
+                  </td>
+
+                  <td class="price">
+                    <input
+                      type="text"
+                      name="unit_price[]"
+                      id="unit_price[]"
+                      class="text-right linePrice numbersOnly"
+                      value="8.00"
+                      maxlength="20"
+                      placeholder="0.00"
+                    />
+                  </td>
+
+                  <td class="qty">
+                    <input
+                      type="text"
+                      name="qty[]"
+                      id="qty[]"
+                      class="text-right lineQty numbersOnly"
+                      value="7.00"
+                      maxlength="20"
+                      placeholder="0.00"
+                    />
+                  </td>
+
+                  <td class="tax1 taxItem" style="display: none">
+                    <input
+                      type="hidden"
+                      name="tax_total[]"
+                      id="tax_total[]"
+                      class="tax_total"
+                      value="0.00"
+                    />
+
+                    <input
+                      type="hidden"
+                      name="tax[]"
+                      class="tax_rate"
+                      value="0.00000"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax2[]"
+                      class="tax2_rate"
+                      value="0.00000"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax3[]"
+                      class="tax3_rate"
+                      value="0.00000"
+                    />
+
+                    <input
+                      type="hidden"
+                      name="tax_id[]"
+                      class="tax_id"
+                      value="0"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax2_id[]"
+                      class="tax2_id"
+                      value="0"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax3_id[]"
+                      class="tax3_id"
+                      value="0"
+                    />
+
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="openTaxDropdown dropdown-toggle noborder placeholder"
+                        data-groupid=""
+                      >
+                        <span class="jtaxTotal">0.00% </span>
+                      </button>
+
+                      <div
+                        class="dropdown-menu dropdown-menu-right taxDropdown"
+                        style="max-height: 300px"
+                      >
+                        <label class="dropdown-item">
+                          <input
+                            onclick="changeTaxSelect(this);"
+                            type="checkbox"
+                            class="NoTax"
+                            data-tax="0"
+                            checked
+                          />
+                          <span>No Tax</span>
+                        </label>
+
+                        <hr />
+
+                        <hr />
+                        <button
+                          type="button"
+                          class="dropdown-item NewTax"
+                          onclick="changeTaxSelect(this);"
+                        >
+                          <i class="icon-new">&nbsp;</i> <span>New Tax</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td
+                    class="amount"
+                    onclick="alert('The amount is calculated automatically as soon as you have entered something into both the unit price and the quantity field. \n\n Example: If you wish to enter a service for $100.00, you should enter 100.00 in the unit price field and 1.00 in the quantity field.')"
+                  >
+                    <input
+                      type="text"
+                      tabindex="-1"
+                      name="total[]"
+                      id="total[]"
+                      class="lineTotal"
+                      value="56.00"
+                      readonly
+                    />
+                  </td>
+
+                  <input type="hidden" name="expense_id[]" value="0" />
+                </tr>
+
+                <tr class="line">
+                  <td class="zap has-tooltip tooltip-left">
+                    <!-- ZAP -->
+                    <button
+                      tabindex="-1"
+                      type="button"
+                      class="btnDeleteRow btn-zap"
+                      style=""
+                    >
+                      <i class="material-icons">&#xe5c9;</i>
+                    </button>
+                    <i class="tip">Delete Line</i>
+                  </td>
+
+                  <td class="dropdown-toggle select item">
+                    <select
+                      class="noborder selectItem permEx"
+                      onfocusin="objSelected=this;"
+                      name="item[]"
+                      id="itemSelect2"
+                    >
+                      <option value=""></option>
+                      <option value="Service">Service</option>
+                      <option value="Hours">Hours</option>
+                      <option value="Days">Days</option>
+                      <option value="Product" selected="selected">
+                        Product
+                      </option>
+                      <option value="Expense">Expense</option>
+                      <option value="Discount_aynax">Discount</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <div class="dropdown">
+                      <textarea
+                        name="description[]"
+                        id="description[]"
+                        rows="1"
+                        maxlength="2000"
+                        class="growTextarea lineDescription hasAutocomplete"
+                      >
+test</textarea
+                      >
+                    </div>
+                    <!--end dropdown-->
+                  </td>
+
+                  <td class="price">
+                    <input
+                      type="text"
+                      name="unit_price[]"
+                      id="unit_price[]"
+                      class="text-right linePrice numbersOnly"
+                      value=""
+                      maxlength="20"
+                      placeholder="0.00"
+                    />
+                  </td>
+
+                  <td class="qty">
+                    <input
+                      type="text"
+                      name="qty[]"
+                      id="qty[]"
+                      class="text-right lineQty numbersOnly"
+                      value=""
+                      maxlength="20"
+                      placeholder="0.00"
+                    />
+                  </td>
+
+                  <td class="tax1 taxItem" style="display: none">
+                    <input
+                      type="hidden"
+                      name="tax_total[]"
+                      id="tax_total[]"
+                      class="tax_total"
+                      value="0.00"
+                    />
+
+                    <input
+                      type="hidden"
+                      name="tax[]"
+                      class="tax_rate"
+                      value="0.00000"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax2[]"
+                      class="tax2_rate"
+                      value="0.00000"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax3[]"
+                      class="tax3_rate"
+                      value="0.00000"
+                    />
+
+                    <input
+                      type="hidden"
+                      name="tax_id[]"
+                      class="tax_id"
+                      value="0"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax2_id[]"
+                      class="tax2_id"
+                      value="0"
+                    />
+                    <input
+                      type="hidden"
+                      name="tax3_id[]"
+                      class="tax3_id"
+                      value="0"
+                    />
+
+                    <div class="dropdown">
+                      <button
+                        type="button"
+                        class="openTaxDropdown dropdown-toggle noborder placeholder"
+                        data-groupid=""
+                      >
+                        <span class="jtaxTotal">0.00% </span>
+                      </button>
+
+                      <div
+                        class="dropdown-menu dropdown-menu-right taxDropdown"
+                        style="max-height: 300px"
+                      >
+                        <label class="dropdown-item">
+                          <input
+                            onclick="changeTaxSelect(this);"
+                            type="checkbox"
+                            class="NoTax"
+                            data-tax="0"
+                            checked
+                          />
+                          <span>No Tax</span>
+                        </label>
+
+                        <hr />
+
+                        <hr />
+                        <button
+                          type="button"
+                          class="dropdown-item NewTax"
+                          onclick="changeTaxSelect(this);"
+                        >
+                          <i class="icon-new">&nbsp;</i> <span>New Tax</span>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td
+                    class="amount"
+                    onclick="alert('The amount is calculated automatically as soon as you have entered something into both the unit price and the quantity field. \n\n Example: If you wish to enter a service for $100.00, you should enter 100.00 in the unit price field and 1.00 in the quantity field.')"
+                  >
+                    <input
+                      type="text"
+                      tabindex="-1"
+                      name="total[]"
+                      id="total[]"
+                      class="lineTotal"
+                      value="0.00"
+                      readonly
+                    />
+                  </td>
+
+                  <input type="hidden" name="expense_id[]" value="0" />
+                </tr>
+              </tbody>
+            </table>
+            <!-- end dataTable -->
+
+            <div class="button-row clearfix">
+              <button
+                type="button"
+                class="btn btn-xs left"
+                sel="btnAddRow"
+                onclick="newLineClick()"
+              >
+                <i class="icon-new">&nbsp;</i><span>New Line</span>
+              </button>
+            </div>
+
+            <div class="foot">
+              <div class="foot-left notes">
+                <label class="input-label">
+                  <span>Notes</span>
+                  <button
+                    type="button"
+                    class="btn-icon has-tooltip tooltip-right"
+                    data-toggle="modal"
+                    data-target="#defaultNote"
+                  >
+                    <i class="material-icons">&#xe3c9;</i>
+                    <i class="tip"
+                      >Edit the default note which<br />
+                      will be added to all new invoices.</i
+                    >
+                  </button>
+                </label>
+
+                <textarea
+                  name="invoice_notes"
+                  id="doc_notes"
+                  rows="1"
+                  style="min-height: 108px"
+                  maxlength="5000"
+                  class="growTextarea"
+                ></textarea>
+              </div>
+              <!--end foot-left-->
+
+              <div class="foot-right">
+                <table id="table_sums" class="sums">
+                  <tr class="sum-subtotal">
+                    <td class="sum-label">Subtotal</td>
+
+                    <td class="sum-number">
+                      <input
+                        type="text"
+                        name="sum_subtotal"
+                        id="sum_subtotal"
+                        class="noborder nofocus text-right"
+                        onclick="alert('The subtotal is calculated automatically as soon as you have entered something into both the unit price and the quantity field in the lines above.\n\nExample: If you wish to enter a service for $100.00, you should enter 100.00 in the unit price field and 1.00 in the quantity field.')"
+                        value="722.00"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+
+                  <tr
+                    class="sum-discount"
+                    id="sum_discountTR"
+                    style="display: none"
+                  >
+                    <td class="sum-label">
+                      <span style="display: inline-block; width: 0.86em"
+                        >&ndash;</span
+                      >
+                      Discount
+                    </td>
+
+                    <td class="sum-number">
+                      <input
+                        type="text"
+                        name="sum_discount"
+                        id="sum_discount"
+                        class="noborder nofocus text-right"
+                        onclick="alert('The discount is calculated automatically as the sum of all lines with discount above.')"
+                        value="0.00"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+
+                  <tr class="sum-taxes">
+                    <td colspan="2">
+                      <table id="tableTaxes"></table>
+                    </td>
+                  </tr>
+
+                  <tr class="sum-total">
+                    <td class="sum-label">Total</td>
+
+                    <td class="sum-number">
+                      <input
+                        type="text"
+                        name="sum_total"
+                        id="sum_total"
+                        class="noborder nofocus text-right"
+                        onclick="alert('The total is calculated automatically as soon as you have entered something into both the unit price and the quantity field in the lines above.\n\nExample: If you wish to enter a service for $100.00, you should enter 100.00 in the unit price field and 1.00 in the quantity field.')"
+                        value="722.00"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+
+                  <tr class="sum-paid">
+                    <td class="sum-label">Amount Paid</td>
+
+                    <td class="sum-number">
+                      <input
+                        type="text"
+                        name="amount_paid"
+                        id="amount_paid"
+                        class="noborder nofocus text-right"
+                        onclick="alert('To enter the amount paid, first save your purchase order. Thereafter convert it to an invoice and mark this as paid.')"
+                        value="0.00"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+
+                  <tr class="sum-balance">
+                    <td class="sum-label">Balance Due</td>
+
+                    <td class="sum-number">
+                      <input
+                        type="text"
+                        name="balance_due"
+                        id="balance_due"
+                        class="noborder nofocus text-right"
+                        onclick="alert('The balance due is calculated automatically as soon as you have entered something into both the unit price and the quantity field in the lines above.\n\nExample: If you wish to enter a service for $100.00, you should enter 100.00 in the unit price field and 1.00 in the quantity field')"
+                        value="$722.00"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                </table>
+                <!-- end table_sums -->
+              </div>
+            </div>
+
+            <input
+              type="hidden"
+              id="lastDocFormInput"
+              name="lastDocFormInput"
+              value="POST_OK"
+            />
+          </div>
+          <!--end #modeEdit-->
+
+          <div class="shown-print">
+            <div id="modePreview">
+              <div class="paper">
+                <div class="view-header">
+                  <div class="view-left">
+                    <address class="view-from">
+                      test <br />
+                      test1
+                    </address>
+
+                    <address class="view-to">
+                      customer1 <br />
+                      customer Address
+                    </address>
+                  </div>
+                  <div class="view-right">
+                    <h1 class="view-headline">My INVOICE</h1>
+
+                    <table class="view-dates">
+                      <tr>
+                        <td>
+                          <b class="nowrap">Invoice #</b>
+                        </td>
+                        <td class="view-invoice-number">0000001</td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <b>Invoice Date</b>
+                        </td>
+                        <td>03/17/2025</td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <b>Due Date</b>
+                        </td>
+                        <td>03/17/2025</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+                <table class="view-datatable without-notes">
+                  <tbody>
+                    <tr>
+                      <th class="col-item">Item</th>
+                      <th class="col-desc">Description</th>
+                      <th class="col-price text-right">Unit Price</th>
+                      <th class="col-qty text-right">Quantity</th>
+                      <th class="col-amount text-right">Amount</th>
+                    </tr>
+
+                    <tr style="">
+                      <td class="min">Expense</td>
+
+                      <td class="desc">
+                        Advertising from vendor on 03/17/2025
+                      </td>
+
+                      <td class="min text-right">666.00</td>
+
+                      <td class="min text-right">1.00</td>
+
+                      <td class="min text-right">666.00</td>
+                    </tr>
+
+                    <tr style="">
+                      <td class="min">Service</td>
+
+                      <td class="desc">service</td>
+
+                      <td class="min text-right">8.00</td>
+
+                      <td class="min text-right">7.00</td>
+
+                      <td class="min text-right">56.00</td>
+                    </tr>
+
+                    <tr style="">
+                      <td class="min">Product</td>
+
+                      <td class="desc">test</td>
+
+                      <td class="min text-right"></td>
+
+                      <td class="min text-right"></td>
+
+                      <td class="min text-right"></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table class="view-sums">
+                  <tbody>
+                    <tr>
+                      <td rowspan="7" class="border-right" style="width: 58%">
+                        &nbsp;
+                      </td>
+                      <td
+                        style="
+                          padding-top: 7px;
+                          padding-bottom: 5px;
+                          padding-left: 35px;
+                        "
+                      >
+                        <b>Subtotal</b>
+                      </td>
+                      <td
+                        class="min text-right"
+                        style="padding-top: 7px; padding-bottom: 5px"
+                      >
+                        722.00
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td
+                        class="border-top"
+                        style="
+                          padding-top: 7px;
+                          padding-bottom: 4px;
+                          padding-left: 35px;
+                        "
+                      >
+                        <b>Total</b>
+                      </td>
+                      <td
+                        class="min text-right border-top"
+                        style="padding-top: 7px; padding-bottom: 4px"
+                      >
+                        722.00
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td
+                        style="
+                          padding-top: 4px;
+                          padding-bottom: 7px;
+                          padding-left: 35px;
+                        "
+                      >
+                        <b>Amount Paid</b>
+                      </td>
+                      <td
+                        class="min text-right"
+                        style="padding-top: 4px; padding-bottom: 7px"
+                      >
+                        0.00
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td
+                        class="bg-grey border-top"
+                        style="
+                          padding-top: 7px;
+                          padding-bottom: 7px;
+                          padding-left: 35px;
+                        "
+                      >
+                        <b>Balance Due</b>
+                      </td>
+                      <td
+                        class="min text-right bg-grey border-top"
+                        style="padding-top: 7px; padding-bottom: 7px"
+                      >
+                        $722.00
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--end #modePreview-->
+          </div>
+
+          <div
+            class="modal"
+            id="modalSave"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button
+                    type="button"
+                    class="btn btn-dark close"
+                    aria-hidden="true"
+                    data-dismiss="modal"
+                  ></button>
+                  <h4 class="modal-title">Save your work</h4>
+                </div>
+                <div class="modal-body">
+                  <p>You have unsaved changes. Save first?</p>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btnSubmit"
+                    onclick="document.getElementById('submitButton').value='Save'"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-cancel"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end modal -->
+
+          <div
+            class="modal"
+            id="defaultNote"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-med" style="width: 670px">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button
+                    type="button"
+                    class="btn btn-dark close"
+                    aria-hidden="true"
+                    data-dismiss="modal"
+                  ></button>
+                  <h4 class="modal-title">Edit Default Notes</h4>
+                </div>
+
+                <!--Show on opening modal-->
+                <div id="modalForm">
+                  <div class="modal-body" style="padding: 50px 60px">
+                    <textarea
+                      maxlength="1000"
+                      name="default_note"
+                      id="default_note"
+                      class="growTextarea"
+                      style="min-height: 120px"
+                      maxlength="1000"
+                    ></textarea>
+
+                    <label
+                      class="label-checkbox"
+                      style="margin-top: 6px; font-size: 92%"
+                    >
+                      <input
+                        type="checkbox"
+                        id="copy_to_current_document"
+                        checked
+                      />
+                      <span
+                        >Add the default notes to the current invoice (max 1000
+                        characters).</span
+                      >
+                    </label>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="btnSaveDefaultNote"
+                    >
+                      Save Default Note
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-cancel"
+                      data-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+
+                <!--Show after Save-->
+                <div id="modalFeedback" style="display: none">
+                  <div class="modal-body" style="padding: 50px 60px">
+                    <div class="alert alert-success">
+                      <ins class="feedbackMessage"></ins>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal"
+                    >
+                      OK
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end modal -->
+
+          <script>
+            function showFeedback(status) {
+              var msg;
+
+              if (status == "success") {
+                msg = "Your default note was successfully updated!";
+              } else {
+                msg =
+                  "There was an error updating your default message.  Please try again later or contact support.";
+              }
+
+              $("#modalForm").hide();
+              $("#modalFeedback").find(".feedbackMessage").text(msg);
+              $("#modalFeedback").show();
+            }
+
+            $(function () {
+              //reset modal
+              $("#defaultNote").on("show.bs.modal", function (e) {
+                $("#modalForm")
+                  .find(".btn-spinner")
+                  .prop("disabled", false)
+                  .removeClass("btn-spinner");
+                $("#modalForm").show();
+                $("#modalFeedback").hide();
+              });
+
+              var request;
+
+              $("#btnSaveDefaultNote").click(function () {
+                //disable this button & add spinner
+                $(this).prop("disabled", true).addClass("btn-spinner");
+                //reenable button if form fails to submit the first time
+                setTimeout(function () {
+                  $(this).prop("disabled", false).removeClass("btn-spinner");
+                }, 6000);
+
+                var notes = $("#default_note").val();
+                var newdata =
+                  "type=invoices&notes=" + encodeURIComponent(notes);
+
+                //Update the main form's notes to match
+                if (document.getElementById("copy_to_current_document").checked)
+                  document.getElementById("doc_notes").value = notes;
+
+                // Abort any pending request to server
+                if (request) {
+                  request.abort();
+                }
+
+                request = $.ajax({
+                  url: "/app/invoices/defaultnotes",
+                  type: "post",
+                  data: newdata,
+                });
+
+                // Callback handler that will be called on success
+                request.done(function (response, textStatus, jqXHR) {
+                  showFeedback("success");
+                });
+
+                // Callback handler that will be called on failure
+                request.fail(function (jqXHR, textStatus, errorThrown) {
+                  showFeedback("error");
+                });
+
+                $("#default_note").each(growTextarea);
+              });
+            });
+          </script>
+        </form>
+      </div>
+    </div>
+    <!-- end page-body -->
+
+    <div
+      class="modal"
+      id="salesTaxModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-med" style="width: 670px">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn btn-dark close"
+              aria-hidden="true"
+              data-dismiss="modal"
+            ></button>
+            <h4 class="modal-title">New Tax Rate</h4>
+          </div>
+          <div
+            class="modal-body"
+            style="padding: 50px 20px 60px 20px; position: relative"
+          >
+            <div style="width: 100%; max-width: 440px; margin: 0 auto">
+              <table class="form" id="tableNewTax">
+                <tr>
+                  <td style="width: 75%">
+                    <label class="label">Tax Name</label>
+                    <input
+                      type="text"
+                      id="singleTaxName"
+                      value="Tax"
+                      maxlength="20"
+                      autocomplete="nope"
+                    />
+                  </td>
+                  <td style="width: 25%">
+                    <label class="label">Tax Rate</label>
+                    <input
+                      type="text"
+                      id="singleTaxRate"
+                      maxlength="6"
+                      value=""
+                      onkeyup="onlyNumbersRate(this)"
+                      placeholder="0.00"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <label class="label">Method</label>
+                    <select id="singleMethod">
+                      <option value="0">Accrual</option>
+                      <option value="1">Cash</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+
+              <div class="modal-error"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="btnSaveTax"
+              onclick="saveSingleTax();"
+            >
+              Save
+            </button>
+            <button type="button" class="btn btn-cancel" data-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        function collectInvoiceData() {
+        // Basic invoice information
+        const invoiceData = {
+            from: {
+                name: $('#from_name').val(),
+                address: $('#from_address').val()
+            },
+            to: {
+                id: $('#to_name').val(),
+                name: $('#to_name option:selected').text(),
+                address: $('#to_address').val()
+            },
+            logo: $('#customization_logoFilename').val(),
+            heading: $('#doc_heading').val(),
+            invoice_number: $('#doc_number').val(),
+            po_number: $('#po_number').val(),
+            invoice_date: $('#dateStart').val(),
+            due_date: $('#dateEnd').val(),
+            items: [],
+            notes: $('#doc_notes').val(),
+            subtotal: parseFloat($('#sum_subtotal').val().replace('$', '') || 0),
+            total: parseFloat($('#sum_total').val().replace('$', '') || 0),
+            amount_paid: parseFloat($('#amount_paid').val().replace('$', '') || 0),
+            balance_due: parseFloat($('#balance_due').val().replace(/[^0-9.-]+/g, '') || 0)
+        };
+    
+        // Collect line items
+        $('#dataTable tr.line').each(function() {
+            const row = $(this);
+            const item = {
+                type: row.find('select[name="item[]"]').val(),
+                description: row.find('textarea[name="description[]"]').val(),
+                unit_price: parseFloat(row.find('input[name="unit_price[]"]').val() || 0),
+                quantity: parseFloat(row.find('input[name="qty[]"]').val() || 0),
+                tax_rate: row.find('.jtaxTotal').text().trim(),
+                tax_amount: parseFloat(row.find('input[name="tax_total[]"]').val() || 0),
+                amount: parseFloat(row.find('input[name="total[]"]').val() || 0),
+                expense_id: row.find('input[name="expense_id[]"]').val()
+            };
+            
+            invoiceData.items.push(item);
+        });
+    
+        return invoiceData;
+    }
+
+    function submitInvoiceToWordPress() {
+        // Collect the data
+        const invoiceData = collectInvoiceData();
+        
+        // Prepare the AJAX request
+        $.ajax({
+            url: '/wp-json/your-plugin/v1/invoices', // Replace with your actual endpoint
+            type: 'POST',
+            data: JSON.stringify(invoiceData),
+            contentType: 'application/json',
+            beforeSend: function(xhr) {
+                // Add WordPress nonce for security if needed
+                xhr.setRequestHeader('X-WP-Nonce', wpApiSettings.nonce);
+            },
+            success: function(response) {
+                console.log('Invoice submitted successfully:', response);
+                alert('Invoice saved successfully!');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error submitting invoice:', error);
+                alert('Error saving invoice: ' + error);
+            }
+        });
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,601 @@
+
+
+    <meta name="viewport" content="width=900" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+    <link rel="shortcut icon" href="../images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../reetech-group-assest/__common/css/common.css?v=V0002458" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="../reetech-group-assest/javascript/error_report.js" type="application/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+   
+    <link rel="stylesheet" type="text/css" href="https://www.skynova.com/app/invoices/css/module.css?v=V0002458" />
+
+    <style>
+        .table-list th:last-child {
+            padding-left: 15px;
+        }
+
+        .table-list td:last-child {
+            padding-left: 20px;
+        }
+
+        .text-customer {
+            white-space: normal;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+    </style>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Include our modal component -->
+    <script src="../reetech-group-assest/javascript/modal-iframe.js"></script>
+    
+    <style>
+        /* Custom styling for full-height modal */
+        .full-height-modal .modal-dialog {
+            height: 100vh;
+            margin: 0;
+            max-width: none;
+        }
+        .full-height-modal .modal-content {
+            height: 100vh;
+            border-radius: 0;
+            border: none;
+        }
+        .full-height-modal .iframe-content {
+            height: calc(100vh - 120px); /* Account for header/footer */
+        }
+    </style>
+    </style>
+</head>
+  
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    
+
+    <style>
+        #tablePaginatorFirstPage,
+        #tablePaginatorPreviousPage,
+        #tablePaginatorCurrentPage,
+        #tablePaginatorNextPage,
+        #tablePaginatorLastPage,
+        #tablePaginatorAllPages {
+            line-height: normal !important;
+            padding: 3px 6px !important;
+            width: unset !important;
+        }
+
+        #innerSendForm * {
+            box-sizing: content-box !important;
+            line-height: normal;
+        }
+
+        #invoiceFormWrapper * {
+            box-sizing: content-box !important;
+        }
+
+        #divWithInfoMessage td {
+            padding: 4px !important;
+        }
+
+        .divWithFilter input {
+            box-sizing: content-box !important;
+        }
+
+        #div2 {
+            margin-left: -250px;
+            left: 50% !important;
+        }
+
+        #recordPayment_date {
+            box-sizing: content-box !important;
+        }
+
+        tr.recordPayment_paymentHistoryTR>td {
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+
+        tr.recordPayment_paymentHistoryTR>td img {
+            margin-top: 3px !important;
+        }
+
+        .btn {
+            padding: 0 16px !important;
+            line-height: 30px !important;
+        }
+
+        .btn.btn-lg {
+            padding: 2px 19px !important;
+            box-shadow: none !important;
+            border: 0.9px solid #aaa !important;
+            line-height: 30px !important;
+        }
+
+        th.table-dropdown .btn,
+        td.table-dropdown .btn {
+            height: 19px !important;
+            line-height: 19px !important;
+            padding: 0 !important;
+        }
+
+        #top-menu .dropdown-item:hover,
+        #top-menu .dropdown-item:active,
+        #utilities .dropdown-item:hover,
+        #utilities .dropdown-item:active {
+            box-shadow: none;
+            border: none;
+            text-decoration: none;
+            background-color: #54a0e7;
+            color: #fff;
+        }
+
+        #no-js-message {
+            display: none;
+            font-size: 13px;
+            line-height: 19px;
+            font-weight: normal !important;
+            text-align: center;
+            max-width: 800px;
+            margin: 1em auto;
+            background-color: #fffadc !important;
+            border: 2px solid #fcf5cd !important;
+            padding: 8px 40px;
+        }
+
+        .alert-danger,
+        .bg-danger {
+            background: #FFFADC url('../../images/red_error_25.gif') 6px 6px no-repeat !important;
+        }
+
+        .alert-danger:before {
+            content: none !important;
+        }
+
+        /* hack to avoid having the icon in v3 overlaping the icon in v2 */
+    </style>
+    <noscript> <style> #no-js-message { display: block; } </style> </noscript>
+
+
+
+
+
+
+
+    <div class="page-body">
+        <div class="container">
+
+            <div class="page-header shown-print-and-screen">
+                <h6>List of Invoices</h6>
+                <span class="action-buttons">
+                    <a class="btn" href="https://www.skynova.com/app/invoices/new">New Invoice</a>
+                </span>
+            </div>
+
+            <div class="feedback-messages">
+
+                <div class="alert alert-danger " id="pageError">
+                    <button type="button" class="close" aria-hidden="true"></button>
+                    <span class="msg"></span>
+                </div>
+
+
+                <div class="alert alert-success " id="pageSuccess">
+                    <button type="button" class="close" aria-hidden="true"></button>
+                    <span class="msg"></span>
+                </div>
+
+
+                <div class="alert alert-warning " id="pageWarning">
+                    <button type="button" class="close" aria-hidden="true"></button>
+                    <span class="msg"></span>
+                </div>
+
+
+                <div class="alert alert-info " id="pageInfo">
+                    <button type="button" class="close" aria-hidden="true"></button>
+                    <span class="msg"></span>
+                </div>
+
+                <div class="alert alert-info " id="pageUpgrade">
+                    <button type="button" class="close" aria-hidden="true"></button>
+                    <span class="msg"></span>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+
+            <form action="" method="get">
+                <input type="hidden" name="c" value="invoice">
+                <input type="hidden" name="p" value="1">
+                <input type="hidden" name="d" value="">
+                <input type="hidden" name="from" value="">
+                <input type="hidden" name="to" value="">
+                <input type="hidden" name="status" value="">
+                <input type="hidden" name="customer" value="">
+                <input type="hidden" name="allPages" value="">
+                <input type="hidden" name="delete" id="delete" value="">
+                <input type="hidden" name="archive" id="archive" value="">
+                <input type="hidden" name="reactivate" id="reactivate" value="">
+                <div class="table-header hidden-print">
+
+
+
+
+                    <table class="input-daterange hasDaterange">
+                        <tr>
+                            <td>
+                                <input type="text" class="noborder startDate" value="01/01/2025" readonly>
+                            </td>
+                            <td class="label">to</td>
+                            <td>
+                                <input type="text" class="noborder endDate" value="12/31/2025" readonly>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn-caret" data-toggle="dropdown"></button>
+                                    <div class="dropdown-menu dropdown-menu-right" data-mindate="01/01/2015" data-maxdate="12/31/2026">
+                                        <a class="dropdown-item dateOption" href="#" data-value="all_time">All Time</a>
+                                        <a class="dropdown-item dateOption" href="#" data-value="this_month">This Month</a>
+                                        <a class="dropdown-item dateOption" href="#" data-value="last_month">Last Month</a>
+                                        <a class="dropdown-item dateOption" href="#" data-value="this_quarter">This Quarter</a>
+                                        <a class="dropdown-item dateOption" href="#" data-value="last_quarter">Last Quarter</a>
+                                        <a class="dropdown-item dateOption" href="#" data-value="this_year">This Year</a>
+                                        <a class="dropdown-item dateOption" href="#" data-value="last_year">Last Year</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                    <div class="dropdown filterDropdown">
+                        <button class="btn-select dropdown-toggle " data-toggle="dropdown">
+
+                                                        <ins>All customers</ins>
+
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item filterCustomer" data-value="">All customers</a>
+                            <hr>
+                            <button type="button" class="dropdown-item filterCustomer " data-value="29632911">
+                                    <div class="truncate lines-2">customer1</div>
+                                </button>
+                        </div>
+                    </div>
+                    <!-- end dropdown-->
+                    <div class="dropdown filterDropdown">
+                        <button class="btn-select dropdown-toggle " data-toggle="dropdown">
+
+                        <ins>All invoices</ins>
+
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item filterStatus" data-value="">All invoices</a>
+                            <hr>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Draft">Draft</button>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Sent">Sent</button>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Viewed">Viewed</button>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Past due">Past due</button>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Paid">Paid</button>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Partial">Partial</button>
+                            <hr>
+                            <button type="button" class="dropdown-item filterStatus " data-value="Archived">Archived</button>
+
+                        </div>
+                    </div>
+                    <!-- end dropdown-->
+                </div>
+
+
+
+                <table class="table-list">
+                    <thead>
+                        <tr>
+                            <th></th>
+
+
+                            <th class="text-left">
+
+                                <a class="sort-" href="list?c=invoice&from=&to=&customer=&status=&d=up">Invoice</a>
+
+                            </th>
+
+
+                            <th class="text-left">
+
+                                <a class="" href="list?c=customer&from=&to=&customer=&status=&d=up">Customer</a>
+
+                            </th>
+
+
+                            <th class="text-center">
+
+                                <a class="" href="list?c=date&from=&to=&customer=&status=&d=up">Date</a>
+
+                            </th>
+
+
+                            <th class="text-right">
+
+                                <a class="" href="list?c=total&from=&to=&customer=&status=&d=up">Total</a>
+
+                            </th>
+
+
+                            <th class="text-right">
+
+                                <a class="" href="list?c=balance_due&from=&to=&customer=&status=&d=up">Balance</a>
+
+                            </th>
+
+
+                            <th class="text-left">
+
+                                <a class="" href="list?c=status&from=&to=&customer=&status=&d=up">Status</a>
+
+                            </th>
+
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+                            <td class="table-dropdown">
+                                <div class="dropdown">
+                                    <a data-toggle="dropdown" href="#" class="btn"><i class="material-icons">&#xe5c5;</i></a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item modal-link" id="editBtn" href="http://localhost/wordpress1/wp-content/plugins/reetech-group/templates/edit.html?home=edit&&id=55" sel="btnEdit"><i class="material-icons edit">&#xe3c9;</i>Edit</a>
+                                        <a class="dropdown-item modal-link" id="viewBtn" href="http://localhost/wordpress1/wp-content/plugins/reetech-group/templates/view.html?home=edit" sel="btnView"><i class="material-icons find_in_page">&#xe880;</i>View</a>
+                                        <a class="dropdown-item" href="list?duplicate=71898917" sel="btnDuplicate"><i class="material-icons content_copy">&#xe14d;</i>Duplicate</a>
+
+                                        <a class="dropdown-item" href="send?c=71898917" sel="btnSend"><i class="material-icons email">&#xe0be;</i>Send</a>
+
+                                        <a class="dropdown-item" href="payment?c=71898917" sel="btnPaid"><i class="material-icons monetization_on">&#xe263;</i>Record payment</a>
+                                        <a class="dropdown-item btnPDF" href="pdf?c=71898917" sel="btnPDF"><i class="material-icons cloud_download">&#xe2c0;</i>Download/Print PDF</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <button type="submit" class="dropdown-item" id="archive_button" onClick="getElementById('archive').value=71898917;$('form').submit();this.disabled=true;"><i class="material-icons archive">&#xe149;</i>Archive</button>
+                                        <button type="button" class="dropdown-item deleteDialog" data-value="71898917" data-status="Draft"><i class="material-icons cancel">&#xe5c9;</i>Delete</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="minify" style="width:88px"><a href='view?c=71898917'>0000001</a></td>
+                            <td><a class="text-customer" href="/app/customers/view?c=29632911">customer1</a></td>
+                            <td class="text-center">03/17/2025</td>
+                            <td class="minify text-right">722.00</td>
+                            <td class="minify text-right">0.00</td>
+                            <td class="minify text-left">
+                                <a class='link-draft' href='view?c=71898917'>Draft</a> </td>
+                        </tr>
+
+
+                    </tbody>
+
+
+
+                    <tfoot>
+                        <tr>
+
+                            <td colspan="3" class="pagination">
+
+                                <span class='pagination-inactive'>First</span>
+                                <span class='pagination-inactive'>&lt;</span>
+                                <span class='pagination-currentpage'>1</span>
+
+                                <span class='pagination-inactive'>&gt;</span>
+                                <span class='pagination-inactive'>Last</span>
+                                <span class='pagination-inactive'>All Pages</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="results">1 invoice</span>
+                            </td>
+
+                            <td class="text-right nowrap">
+                                722.00 </td>
+
+                            <td class="text-right nowrap">
+                                0.00 </td>
+
+                            <td></td>
+
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+
+                <div class="table-footer">
+                    <a class="btnPrint right">Print table</a>
+                </div>
+
+
+                <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Please confirm.</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <p>Are you sure you want to delete the selected invoice? <span class="warningPayments">This will also delete associated payments.</span></p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btnSubmit" sel="btnDelete">Delete</button>
+                                <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end modal -->
+
+
+                <div class="modal fade" id="sendPaymentReminderModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Send Payment Reminder</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <p>TO DO</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="#" class="btn btn-danger btnSubmit" sel="btnSendReminder">Send Reminder</button>
+                                <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end modal -->
+
+            </form>
+
+            <script>
+                $('#confirmDelete').on('hidden.bs.modal', function(e) {
+                    $("#delete").val('');
+                });
+
+                $('.deleteDialog').on('click', function(e) {
+                    const obj_id = e.currentTarget.dataset.value;
+                    const obj_status = e.currentTarget.dataset.status;
+
+                    $("#delete").val(obj_id);
+
+                    if (['Paid', 'Partial'].includes(obj_status)) {
+                        $('#confirmDelete span.warningPayments').show();
+                    } else {
+                        $('#confirmDelete span.warningPayments').hide();
+                    }
+
+                    $('#confirmDelete').modal('show');
+                });
+            </script>
+
+        </div>
+    </div>
+    <!--end page-body-->
+
+
+
+
+
+
+
+
+    <script src="../reetech-group-assest/javascript/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+
+
+
+
+    <script src="../reetech-group-assest/javascript/javascript.js"></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"924ee4203f23595d","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"984c858828644809a4fdf1ea68f32b03"}'
+        crossorigin="anonymous"></script>
+
+        <script>
+        $(document).ready(function() {
+            // Standard Edit Modal
+            $('#editBtn').iframeModal({
+                modalId: 'editModal',
+                title: function(url) {
+                    return 'Custom: ' + new URL(url, window.location.href).searchParams.get('id');
+                },
+           
+                
+                size: 'modal-fullscreen',
+                header: false,
+                footer: false,
+                closeButton: true,
+                autoSize: true,
+                
+                fullHeight: true,  
+                footerButtons: [
+                    { text: 'Save', class: 'btn-primary', action: 'save' },
+                    { text: 'Cancel', class: 'btn-outline-secondary', action: 'close' }
+                ],
+                footerButtonActions: {
+                    save: function() {
+                        const iframe = $('#editModal .iframe-content')[0];
+                        iframe.contentWindow.postMessage('save', '*');
+                    }
+                },
+                onLoad: function(iframe) {
+                    console.log('Edit modal loaded');
+                }
+            });
+            
+            // View Modal (No footer)
+            $('#viewBtn').iframeModal({
+                modalId: 'viewModal',
+                title: 'View Item Details',
+                size: 'modal-fullscreen',
+                footer: false,
+                autoSize: true,
+                maxHeight: '80vh'
+            });
+            
+            // Fully Custom Modal
+            $('#editBtn1').iframeModal({
+                modalId: 'customModal',
+                title: function(url) {
+                    return 'Custom: ' + new URL(url, window.location.href).searchParams.get('id');
+                },
+                size: 'modal-lg',
+                header: false,
+                footer: false,
+                closeButton: true,
+                fullHeight: true, 
+                footerButtons: [
+                    { text: 'Done', class: 'btn-success', action: 'customAction' },
+                    { text: 'Close', class: 'btn-danger', action: 'close' }
+                ],
+                footerButtonActions: {
+                    customAction: function() {
+                        alert('Custom action triggered!');
+                    }
+                },
+                beforeClose: function() {
+                    return confirm('Are you sure you want to close?');
+                }
+            });
+        });
+    </script>
+

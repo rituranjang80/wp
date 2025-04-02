@@ -3001,7 +3001,7 @@
  <link rel="stylesheet" type="text/css" href="https://www.skynova.com/app/__common/css/common.css?v=V0002458" />
  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
- 
+ <script src="https://www.skynova.com/javascript/error_report.js" type="application/javascript"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
  <script>
@@ -3230,10 +3230,7 @@
 
      <div id="top-utilities" class="container">
 
-         <div class="logo">
-             <a href="/"><img src="/images/logo_skynova.svg" alt="skynova"></a>
-         </div>
-
+        \
          <ul id="utilities" class="menu" style="z-index:5;">
 
              <li class="menu-text"><b>rituranjan.gupta2@gmail.com</b></li>
@@ -3346,80 +3343,7 @@
 
 
 
-<script>
-      function collectInvoiceData() {
-        // Basic invoice information
-        const invoiceData = {
-            from: {
-                name: $('#from_name').val(),
-                address: $('#from_address').val()
-            },
-            to: {
-                id: $('#to_name').val(),
-                name: $('#to_name option:selected').text(),
-                address: $('#to_address').val()
-            },
-            logo: $('#customization_logoFilename').val(),
-            heading: $('#doc_heading').val(),
-            invoice_number: $('#doc_number').val(),
-            po_number: $('#po_number').val(),
-            invoice_date: $('#dateStart').val(),
-            due_date: $('#dateEnd').val(),
-            items: [],
-            notes: $('#doc_notes').val(),
-            subtotal: parseFloat($('#sum_subtotal').val().replace('$', '') || 0),
-            total: parseFloat($('#sum_total').val().replace('$', '') || 0),
-            amount_paid: parseFloat($('#amount_paid').val().replace('$', '') || 0),
-            balance_due: parseFloat($('#balance_due').val().replace(/[^0-9.-]+/g, '') || 0)
-        };
-    
-        // Collect line items
-        $('#dataTable tr.line').each(function() {
-            const row = $(this);
-            const item = {
-                type: row.find('select[name="item[]"]').val(),
-                description: row.find('textarea[name="description[]"]').val(),
-                unit_price: parseFloat(row.find('input[name="unit_price[]"]').val() || 0),
-                quantity: parseFloat(row.find('input[name="qty[]"]').val() || 0),
-                tax_rate: row.find('.jtaxTotal').text().trim(),
-                tax_amount: parseFloat(row.find('input[name="tax_total[]"]').val() || 0),
-                amount: parseFloat(row.find('input[name="total[]"]').val() || 0),
-                expense_id: row.find('input[name="expense_id[]"]').val()
-            };
-            
-            invoiceData.items.push(item);
-        });
-    
-        return invoiceData;
-    }
 
-    function submitInvoiceToWordPress() {
-        // Collect the data
-        const invoiceData = collectInvoiceData();
-        
-        // Prepare the AJAX request
-        $.ajax({
-            url: 'http://localhost/wordpress1/wp-json/reetech-group/v1/invoices', // Replace with your actual endpoint
-            type: 'POST',
-            data: JSON.stringify(invoiceData),
-            contentType: 'application/json',
-            beforeSend: function(xhr) {
-                // Add WordPress nonce for security if needed
-               let i=0
-              //  xhr.setRequestHeader('X-WP-Nonce', wpApiSettings.nonce);
-            },
-            success: function(response) {
-                console.log('Invoice submitted successfully:', response);
-                alert('Invoice saved successfully!');
-            },
-            error: function(xhr, status, error) {
-                console.error('Error submitting invoice:', error);
-                alert('Error saving invoice: ' + error);
-            }
-        });
-    }
-
-</script>
 
  <div class="page-body">
      <div class="container">
@@ -3530,10 +3454,8 @@
                      <td></td>
 
                      <td class="minify">
-                        <button type="button" onclick="submitInvoiceToWordPress()" class="btn btn-primary">Save Invoice</button>
 
-
-                         <!-- <button type="submit" class="btn btn-dark btnSubmit" onclick="document.getElementById('submitButton').value='Save'" sel="btnSave">Save</button> -->
+                         <button type="submit" class="btn btn-dark btnSubmit" onclick="document.getElementById('submitButton').value='Save'" sel="btnSave">Save</button>
 
                      </td>
                  </tr>
